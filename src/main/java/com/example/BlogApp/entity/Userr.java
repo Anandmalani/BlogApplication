@@ -1,13 +1,25 @@
 package com.example.BlogApp.entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "user")
+@Setter
+@Getter
+@NoArgsConstructor   
+@AllArgsConstructor   
 public class Userr {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +28,8 @@ public class Userr {
 	private String username;
 	private String password;
 	private String about;
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	private List<Posts> posts;
 	public Integer getId() {
 		return id;
 	}
@@ -46,17 +60,14 @@ public class Userr {
 	public void setAbout(String about) {
 		this.about = about;
 	}
-	public Userr(Integer id, String name, String username, String password, String about) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.username = username;
-		this.password = password;
-		this.about = about;
+	public List<Posts> getPosts() {
+		return posts;
 	}
-	public Userr() {
-		super();
+	public void setPosts(List<Posts> posts) {
+		this.posts = posts;
 	}
+	
+	
 	
 	
 	
