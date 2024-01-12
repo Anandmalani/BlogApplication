@@ -1,11 +1,14 @@
 package com.example.BlogApp.service.impl;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.BlogApp.dto.PostsDto;
 import com.example.BlogApp.entity.Posts;
+import com.example.BlogApp.entity.Userr;
 import com.example.BlogApp.exception.ResourceNotFoundException;
 import com.example.BlogApp.repository.PostsRepository;
 import com.example.BlogApp.service.PostsService;
@@ -83,5 +86,14 @@ public class PostsServiceImpl implements PostsService {
 		
 		
 	}
+
+
+
+//	@Override
+//	public List<Posts> getAllPostsForUser(Userr user) {
+//		// TODO Auto-generated method stub
+//		return postsRepository.getAllPostsForUser(user);
+////		return null;
+//	}
 
 }

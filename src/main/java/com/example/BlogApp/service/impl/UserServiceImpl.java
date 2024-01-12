@@ -61,6 +61,12 @@ public class UserServiceImpl implements UserService{
 				.orElseThrow(() -> new ResourceNotFoundException("Userr", "id", id));
 		return modelMapper.map(user, Userdto.class);
 	}
+	public Userr getUser1( int id) {
+		// TODO Auto-generated method stub
+		Userr user=userRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Userr", "id", id));
+		return user;
+	}
 
 	@Override
 	public void deleteUser(int id) {

@@ -40,6 +40,12 @@ public class UserController {
 		
 		
 	}
+//	@GetMapping("/{uersId}/posts")
+//	public void getPostsOfSpecificUser(@PathVariable Integer userId) {
+//		Userr user=userServiceImpl.getUser1(userId);
+//		
+//		
+//	}
 	@PutMapping("/{id}")
 	public Userdto updateUser( @RequestBody Userdto user,@PathVariable Integer id) {
 		return userServiceImpl.updateUser( user,id);
