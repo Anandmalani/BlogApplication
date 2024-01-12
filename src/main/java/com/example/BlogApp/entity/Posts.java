@@ -23,8 +23,8 @@ public class Posts {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer postId;
 	private String postTitle;
-	@ManyToOne
 	
+	@ManyToOne
 	@JoinColumn(name = "user_id")
 //	@Column(name="user_id")
 	private Userr user;

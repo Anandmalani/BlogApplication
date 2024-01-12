@@ -20,15 +20,21 @@ import com.example.BlogApp.exception.ResourceNotFoundException;
 import com.example.BlogApp.service.impl.UserServiceImpl;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/signup")
 public class UserController {
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 	
 	@PostMapping
-	public Userdto createUser(@RequestBody Userdto user) {
-	     return userServiceImpl.createUser(user);
+	public ResponseEntity<?> createUser(@RequestBody Userdto user) {
+//	     return userServiceImpl.createUser(user);
 //	     return new ResponseEntity<>(user1,HttpStatus.CREATED);
+	     Userdto createdUser = userServiceImpl.createUser(user);
+	        if (createdUser != null) {
+	            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+	        } else {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create customer");
+	      }
 		
 		
 	}

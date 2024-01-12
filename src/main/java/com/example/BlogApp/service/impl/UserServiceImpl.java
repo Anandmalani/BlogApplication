@@ -1,17 +1,22 @@
 package com.example.BlogApp.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.BlogApp.dto.Userdto;
+import com.example.BlogApp.entity.Role;
 import com.example.BlogApp.entity.Userr;
 import com.example.BlogApp.exception.ResourceNotFoundException;
+import com.example.BlogApp.repository.RoleRepository;
 import com.example.BlogApp.repository.UserRepository;
 import com.example.BlogApp.service.UserService;
+
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -20,6 +25,10 @@ public class UserServiceImpl implements UserService{
 	private UserRepository userRepository;
 	@Autowired
 	private ModelMapper modelMapper;
+	@Autowired
+	private  PasswordEncoder passwordEncoder;
+	@Autowired
+	private RoleRepository roleRepository;
 	
 	public Userdto userToUserdto(Userr user) {
 		return modelMapper.map(user, Userdto.class);		
@@ -31,11 +40,29 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public Userdto createUser(Userdto userdto) {
-		// TODO Auto-generated method stub
-		Userr user=userdtoToUser(userdto);
-		
-		 Userr user1=userRepository.save(user);
-		 return userToUserdto(user1);
+		if (userRepository.existsByUsername(userdto.getUsername())) {
+            return null;
+        }
+		 String hashPassword = passwordEncoder.encode(userdto.getPassword());
+	       userdto.setPassword(hashPassword);
+	       Userr user=userdtoToUser(userdto);
+	       
+	       //set role
+	       List<Role> roles = new ArrayList<>();
+	    	Role userRole = roleRepository.findByRoleName("USER");
+	    	if (userRole == null) {
+	    	    userRole = new Role();
+	    	    userRole.setRoleName("USER");
+	    	    
+	    	}
+	    	roles.add(userRole);
+	    	user.setRoles(roles);
+	    	userRepository.save(user);
+//	       userdto.setId(user.getId());
+	       Userdto userdto1=userToUserdto(user);
+
+//	      
+		 return userdto1;
 //		return null;
 	}
 
